@@ -36,30 +36,6 @@ describe('method', () => {
     rsaVerify65537(message, rsaSig, modul);
   });
 
-  it('should accept RSA signature with randomly generated parameters: 256-bits', () => {
-    const input = generateDigestBigint('hello world!');
-    const params = generateRsaParams(256);
-
-    const message = Bigint2048.from(input);
-    const signature = Bigint2048.from(rsaSign(input, params.d, params.n));
-    const modulus = Bigint2048.from(params.n);
-
-    rsaVerify65537(message, signature, modulus);
-  });
-
-  it.skip('should accept RSA signature with randomly generated parameters: 256-bits - 100 iterations', () => {
-    for (let i = 0; i < 100; i++) {
-      const input = generateDigestBigint('hello world!');
-      const params = generateRsaParams(256);
-
-      const message = Bigint2048.from(input);
-      const signature = Bigint2048.from(rsaSign(input, params.d, params.n));
-      const modulus = Bigint2048.from(params.n);
-
-      rsaVerify65537(message, signature, modulus);
-    }
-  });
-
   it('should accept RSA signature with randomly generated parameters: 512-bits', () => {
     const input = generateDigestBigint('hello there!');
     const params = generateRsaParams(512);
@@ -102,7 +78,7 @@ describe('method', () => {
 
       const message = Bigint2048.from(input);
       const signature = Bigint2048.from(rsaSign(input, params.d, params.n));
-      const modulus = Bigint2048.from(params.n);
+      const modulus = Bigint2048.from(params.n); // domain public key 
 
       rsaVerify65537(message, signature, modulus);
     }
@@ -130,6 +106,17 @@ describe('method', () => {
 
       rsaVerify65537(message, signature, modulus);
     }
+  });
+
+  it.only('should reject RSA signature with randomly generated parameters larger than 2048-bits', () => {
+    const input = generateDigestBigint('how are you!');
+    const params = generateRsaParams(2090);
+
+    const message = Bigint2048.from(input);
+    const signature = Bigint2048.from(rsaSign(input, params.d, params.n));
+    const modulus = Bigint2048.from(params.n);
+
+    expect(() => rsaVerify65537(message, signature, modulus)).toThrowError();
   });
 
   it('should reject RSA signature with non-compliant modulus: 1024-bits', () => {
