@@ -114,7 +114,7 @@ function multiply(
   let carry = Field(0);
 
   for (let i = 0; i < 2 * 18 - 2; i++) {
-    let res_i = res[i].add(carry);
+    let res_i = res[i].add(carry).seal();
 
     carry = Provable.witness(Field, () => res_i.div(2n ** 116n));
     rangeCheck128Signed(carry);
@@ -204,10 +204,3 @@ let rsaZkProgram = ZkProgram({
     },
   },
 });
-
-// let { verify } = await rsaZkProgram.analyzeMethods();
-
-// console.log(verify.summary());
-// console.log('rows', verify.rows);
-
-// await rsa.compile();
