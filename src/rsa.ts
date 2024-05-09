@@ -12,7 +12,6 @@ import {
   ZkProgram, 
   provable, 
 } from 'o1js';
-// import { tic, toc } from '../utils/tic-toc.node.js';
 
 export { 
   Bigint2048, 
@@ -117,11 +116,7 @@ function multiply(
   for (let i = 0; i < 2 * 18 - 2; i++) {
     let res_i = res[i].add(carry);
 
-    carry = Provable.witness(Field, () => {
-      let res_in = res_i.toBigInt();
-      if (res_in > 1n << 128n) res_in -= Field.ORDER;
-      return Field(res_in >> 116n);
-    });
+    carry = Provable.witness(Field, () => res_i.div(2n ** 116n));
     rangeCheck128Signed(carry);
 
     // (xy - qp - r)_i + c_(i-1) === c_i * 2^116
@@ -173,7 +168,6 @@ function rangeCheck116(x: Field) {
   // 12-bit limbs
   let x52 = Provable.witness(Field, () => Field(bitSlice(x.toBigInt(), 52, 12)));
   
-    //   let [x52] = Gadgets.rangeCheck64(x1);
   x52.assertEquals(0n); // => x1 is 52 bits
   // 64 + 52 = 116
   x0.add(x1.mul(1n << 64n)).assertEquals(x);
@@ -192,7 +186,7 @@ function rangeCheck128Signed(xSigned: Field) {
   });
 
   Gadgets.rangeCheck64(x0);
-  // Gadgets.rangeCheck64(x1);
+  Gadgets.rangeCheck64(x1);
 
   x0.add(x1.mul(1n << 64n)).assertEquals(x);
 }
@@ -204,18 +198,16 @@ let rsaZkProgram = ZkProgram({
     verify: {
       privateInputs: [Bigint2048, Bigint2048, Bigint2048],
 
-      method(message: Bigint2048, signature: Bigint2048, modulus: Bigint2048) {
+      async method(message: Bigint2048, signature: Bigint2048, modulus: Bigint2048) {
         rsaVerify65537(message, signature, modulus);
       },
     },
   },
 });
 
-// let { verify } = rsa.analyzeMethods();
+// let { verify } = await rsaZkProgram.analyzeMethods();
 
 // console.log(verify.summary());
 // console.log('rows', verify.rows);
 
-// tic('compile');
 // await rsa.compile();
-// toc();
