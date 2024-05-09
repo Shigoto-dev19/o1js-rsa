@@ -38,8 +38,5 @@
   },
   "peerDependencies": {
     "o1js": "1.*"
-  },
-  "dependencies": {
-    "big-integer": "^1.6.52"
   }
 }

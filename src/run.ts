@@ -30,7 +30,7 @@ await rsaZkProgram.compile({ forceRecompile: forceRecompileEnabled });
 console.timeEnd('compile');
 
 console.time('generate RSA parameters and inputs (2048 bits)');
-const input = sha256Bigint('How are you!');
+const input = await sha256Bigint('How are you!');
 const params = generateRsaParams(2048);
 const message = Bigint2048.from(input);
 const signature = Bigint2048.from(rsaSign(input, params.d, params.n));
