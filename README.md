@@ -2,9 +2,6 @@
 
 This template uses TypeScript.
 
-## RSA Signature 
-![alt text](./images/rsa-signature.png)
-
 ## How to build
 
 ```sh

@@ -1,14 +1,33 @@
 {
   "name": "rsa-o1js",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "",
   "author": "",
   "license": "Apache-2.0",
+  "homepage": "https://github.com/Shigoto-dev19/o1js-rsa",
   "keywords": [
     "mina-zkapp",
     "mina-zk-app",
     "mina-dapp",
-    "zkapp"
+    "zkapp",
+    "RSA65537",
+    "verify signature",
+    "bigint",
+    "zk",
+    "zkSNARK",
+    "zero knowledge"
+  ],
+   "contributors": [
+      {
+        "name": "Gregor Mitscha-Baude",
+        "githubUsername": "mitschabaude",
+        "url": "https://plusepsilon.com/"
+      },
+      {
+        "name": "Mahmoud Kaffel",
+        "githubUsername": "Shigoto-dev19",
+        "url": "https://github.com/Shigoto-dev19"
+      }
   ],
   "type": "module",
   "main": "build/src/index.js",
