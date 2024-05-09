@@ -34,7 +34,7 @@ function toBigInt(x: bigInt.BigInteger): bigint {
  * @param {number} bitLength - The desired bit length of the prime number. Default is 1024.
  * @returns {bigInt.BigInteger} A random prime number with the specified bit length.
  */
-function generateRandomPrime(bitLength=1024): bigInt.BigInteger {
+function generateRandomPrime(bitLength: number): bigInt.BigInteger {
     let primeCandidate;
     do {
         // Generate a random number with the desired bit length
@@ -56,11 +56,11 @@ function generateRandomPrime(bitLength=1024): bigInt.BigInteger {
  * @param {number} [primeSize] - The bit size of the prime numbers used for generating the RSA parameters. Default is undefined.
  * @returns {Object} An object containing the RSA parameters: p (prime), q (prime), n (modulus), phiN (Euler's totient function), e (public exponent), and d (private exponent).
  */
-function generateRsaParams(primeSize?: number) { 
+function generateRsaParams(primeSize: number) { 
     // Generate two random prime numbers
-    const p = toBigInt(generateRandomPrime(primeSize));
-    const q = toBigInt(generateRandomPrime(primeSize));
-
+    const p = toBigInt(generateRandomPrime(primeSize / 2));
+    const q = toBigInt(generateRandomPrime(primeSize / 2));
+    
     // Public exponent
     const e = 65537n;
 
