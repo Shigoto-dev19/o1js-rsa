@@ -1,7 +1,7 @@
 import { Bigint2048, rsaVerify65537 } from './rsa';
 import bigInt from 'big-integer';
 import { 
-  generateDigestBigint,
+  sha256Bigint,
   generateRsaParams,
   rsaSign,
 } from './utils'
@@ -37,7 +37,7 @@ describe('method', () => {
   });
 
   it('should accept RSA signature with randomly generated parameters: 512-bits', () => {
-    const input = generateDigestBigint('hello there!');
+    const input = sha256Bigint('hello there!');
     const params = generateRsaParams(512);
 
     const message = Bigint2048.from(input);
@@ -49,7 +49,7 @@ describe('method', () => {
 
   it.skip('should accept RSA signature with randomly generated parameters: 512-bits - 100 iterations', () => {
     for (let i = 0; i < 100; i++) {
-      const input = generateDigestBigint('hello there!');
+      const input = sha256Bigint('hello there!');
       const params = generateRsaParams(512);
 
       const message = Bigint2048.from(input);
@@ -61,7 +61,7 @@ describe('method', () => {
   });
 
   it('should accept RSA signature with randomly generated parameters: 1024-bits', () => {
-    const input = generateDigestBigint('how is it going!');
+    const input = sha256Bigint('how is it going!');
     const params = generateRsaParams(1024);
 
     const message = Bigint2048.from(input);
@@ -73,7 +73,7 @@ describe('method', () => {
 
   it.skip('should accept RSA signature with randomly generated parameters: 1024-bits - 50 iterations', () => {
     for (let i = 0; i < 50; i++) {
-      const input = generateDigestBigint('how is it going!');
+      const input = sha256Bigint('how is it going!');
       const params = generateRsaParams(1024);
 
       const message = Bigint2048.from(input);
@@ -85,7 +85,7 @@ describe('method', () => {
   });
 
   it('should accept RSA signature with randomly generated parameters: 2048-bits', () => {
-    const input = generateDigestBigint('how are you!');
+    const input = sha256Bigint('how are you!');
     const params = generateRsaParams(2048);
 
     const message = Bigint2048.from(input);
@@ -97,7 +97,7 @@ describe('method', () => {
 
   it.skip('should accept RSA signature with randomly generated parameters: 2048-bits - 25 iterations', () => {
     for (let i = 0; i < 25; i++) {
-      const input = generateDigestBigint('how are you!');
+      const input = sha256Bigint('how are you!');
       const params = generateRsaParams(2048);
 
       const message = Bigint2048.from(input);
@@ -108,8 +108,8 @@ describe('method', () => {
     }
   });
 
-  it.only('should reject RSA signature with randomly generated parameters larger than 2048-bits', () => {
-    const input = generateDigestBigint('how are you!');
+  it('should reject RSA signature with randomly generated parameters larger than 2048-bits', () => {
+    const input = sha256Bigint('how are you!');
     const params = generateRsaParams(2090);
 
     const message = Bigint2048.from(input);
@@ -120,7 +120,7 @@ describe('method', () => {
   });
 
   it('should reject RSA signature with non-compliant modulus: 1024-bits', () => {
-    const input = generateDigestBigint('hello!');
+    const input = sha256Bigint('hello!');
     const params = generateRsaParams(1024);
 
     const message = Bigint2048.from(input);
@@ -131,7 +131,7 @@ describe('method', () => {
   });
 
   it('should reject RSA signature with non-compliant input: 1024-bits', () => {
-    const input = generateDigestBigint('hello!');
+    const input = sha256Bigint('hello!');
     const params = generateRsaParams(1024);
 
     const message = Bigint2048.from(35n); // Tamper with input
@@ -142,7 +142,7 @@ describe('method', () => {
   });
 
   it('should reject non compliant RSA signature: false private key: 1024-bits', () => {
-    const input = generateDigestBigint('hello!');
+    const input = sha256Bigint('hello!');
     const params = generateRsaParams(1024);
 
     const message = Bigint2048.from(input);
@@ -153,7 +153,7 @@ describe('method', () => {
   });
 
   it('should reject non-compliant RSA signature: false signature modulus : 1024-bits', () => {
-    const input = generateDigestBigint('hello!');
+    const input = sha256Bigint('hello!');
     const params = generateRsaParams(1024);
 
     const message = Bigint2048.from(input);

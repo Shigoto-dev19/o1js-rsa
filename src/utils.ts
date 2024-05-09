@@ -2,7 +2,7 @@ import { createHash } from 'crypto';
 import bigInt from 'big-integer';
 
 export { 
-    generateDigestBigint,
+    sha256Bigint,
     toBigInt,
     generateRandomPrime,
     generateRsaParams,
@@ -15,7 +15,7 @@ export {
  * @param {string} message - The input message to be hashed.
  * @returns {bigint} The SHA-256 hash of the input message as a native bigint.
  */
-function generateDigestBigint(message: string) {
+function sha256Bigint(message: string) {
     const digest = createHash('sha256').update(message, 'utf8').digest('hex');
     return BigInt('0x' + digest);
 }
